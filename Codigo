@@ -1,0 +1,87 @@
+<?php
+
+$carros = [
+    "Hatch" => [
+        "Fiat Uno" => [
+            "preco" => 45990,
+            "motor" => "1.0 8V",
+            "consumo" => "13 km/l"
+        ],
+        "Volkswagen Gol" => [
+            "preco" => 49990,
+            "motor" => "1.0 12V",
+            "consumo" => "12 km/l"
+        ]
+    ],
+    "Sedan" => [
+        "Honda Civic" => [
+            "preco" => 99990,
+            "motor" => "2.0 16V",
+            "consumo" => "11 km/l"
+        ],
+        "Toyota Corolla" => [
+            "preco" => 104990,
+            "motor" => "2.0 16V",
+            "consumo" => "10 km/l"
+        ]
+    ],
+    "SUV" => [
+        "Nissan Kicks" => [
+            "preco" => 84990,
+            "motor" => "1.6 16V",
+            "consumo" => "9 km/l"
+        ],
+        "Jeep Compass" => [
+            "preco" => 119990,
+            "motor" => "2.0 16V",
+            "consumo" => "8 km/l"
+        ]
+    ]
+];
+
+do {
+    echo "Escolha a categoria de carro:\n";
+    echo "1. Hatch\n";
+    echo "2. Sedan\n";
+    echo "3. SUV\n";
+    echo "Digite o número da categoria: ";
+    $categoriaEscolhida = trim(fgets(STDIN));
+
+    switch ($categoriaEscolhida) {
+        case 1:
+            $categoria = "Hatch";
+            break;
+        case 2:
+            $categoria = "Sedan";
+            break;
+        case 3:
+            $categoria = "SUV";
+            break;
+        default:
+            echo "Categoria inválida.\n";
+            continue 2;
+    }
+
+    echo "Modelos disponíveis na categoria $categoria:\n";
+    foreach ($carros[$categoria] as $modelo => $dados) {
+        echo "- $modelo\n";
+    }
+
+    echo "Digite o nome do modelo desejado: ";
+    $modeloEscolhido = trim(fgets(STDIN));
+
+    if (isset($carros[$categoria][$modeloEscolhido])) {
+        $dadosModelo = $carros[$categoria][$modeloEscolhido];
+        echo "Informações sobre o modelo $modeloEscolhido:\n";
+        echo "Preço: R$ " . number_format($dadosModelo['preco'], 2, ',', '.') . "\n";
+        echo "Motor: " . $dadosModelo['motor'] . "\n";
+        echo "Consumo: " . $dadosModelo['consumo'] . "\n";
+    } else {
+        echo "Modelo não encontrado na categoria $categoria.\n";
+        continue;
+    }
+
+    echo "Deseja consultar outro modelo? (s/n): ";
+    $resposta = trim(fgets(STDIN));
+} while (strtolower($resposta) == 's');
+?>
